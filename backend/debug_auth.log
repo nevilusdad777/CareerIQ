@@ -1,0 +1,3 @@
+[2026-03-17T09:48:11.550Z] requireAdmin check: {"userId":"69aa66417e6f736cc416733f","iat":1773733308,"exp":1773819708}
+[2026-03-17T09:48:11.552Z] Fallback check for userId: 69aa66417e6f736cc416733f
+[2026-03-17T09:48:11.633Z] DB User found: admin
