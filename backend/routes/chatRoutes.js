@@ -1,72 +1,61 @@
 const express = require("express");
 const router = express.Router();
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const dotenv = require("dotenv");
+const fs = require("fs");
+const path = require("path");
+const { KNOWLEDGE_BASE } = require("../data/chatbotKnowledge");
 
-dotenv.config();
+const LOG_FILE = path.join(__dirname, "../chat_debug.log");
+const logToFile = (msg) => {
+  try {
+    const entry = `[${new Date().toISOString()}] ${msg}\n`;
+    fs.appendFileSync(LOG_FILE, entry);
+  } catch (err) {
+    console.error("Failed to write to chat_debug.log:", err.message);
+  }
+};
 
-// Initialize Gemini API
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const getLocalResponse = (message) => {
+  const msg = message.toLowerCase();
+  
+  // High-priority exact matches or keyword broad search
+  for (const category in KNOWLEDGE_BASE) {
+    if (category === 'default') continue;
+    const { keywords, response } = KNOWLEDGE_BASE[category];
+    if (keywords.some(keyword => msg.includes(keyword))) {
+      return response;
+    }
+  }
 
-// System Prompt for CareerIQ
-const SYSTEM_PROMPT = `
-You are the CareerIQ AI Assistant, an expert career coach and technical mentor. 
-Your goal is to help students and job seekers on the CareerIQ platform with:
-1. Career Path Guidance: Suggesting roles based on interests and skills.
-2. Skill Development: Recommending technical and soft skills to learn.
-3. Roadmap Advice: Helping users understand their learning journey.
-4. Interview Preparation: Providing tips, common questions, and behavioral advice.
-5. Placement Support: Advice on resumes, networking, and job search strategies.
+  // Final fallback from knowledge base
+  return KNOWLEDGE_BASE.default.response;
+};
 
-Guidelines:
-- Be professional, encouraging, and concise.
-- Use formatting (bullet points, bold text) to make answers readable.
-- If you don't know something specific about the user's private data, ask them to check their dashboard.
-- Always maintain the perspective of an elite career mentor.
-`;
-
+// --- API Route ---
 router.post("/", async (req, res) => {
-  const { message, chatHistory } = req.body;
+  logToFile(`📨 (Heavy) Request: ${JSON.stringify(req.body)}`);
+  const { message } = req.body;
 
-  if (!message) {
+  if (!message || typeof message !== 'string' || message.trim() === '') {
     return res.status(400).json({ error: "Message is required" });
   }
 
-  if (!process.env.GEMINI_API_KEY) {
-    console.warn("⚠️ GEMINI_API_KEY is missing in .env");
-    return res.status(500).json({ 
-      reply: "I'm having trouble connecting to my brain right now. Please make sure the AI configuration is complete." 
-    });
-  }
-
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+    // Artificial slight delay for natural feel
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-    // Format history for Gemini if provided
-    const chat = model.startChat({
-      history: chatHistory || [],
-      generationConfig: {
-        maxOutputTokens: 1000,
-      },
-    });
-
-    // We prepend the system prompt to the direct message for context if no history exists,
-    // or as a context setter for the session.
-    const promptWithContext = `${SYSTEM_PROMPT}\n\nUser Question: ${message}`;
-
-    const result = await chat.sendMessage(promptWithContext);
-    const response = await result.response;
-    const text = response.text();
+    const reply = getLocalResponse(message);
+    logToFile(`✅ (Heavy) Response generated`);
 
     res.json({
       success: true,
-      reply: text
+      reply: reply,
+      isLocal: true,
+      commandCount: Object.keys(KNOWLEDGE_BASE).length
     });
-
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    logToFile(`❌ (Heavy) Error: ${error.message}`);
     res.status(500).json({ 
-      error: "Failed to generate AI response",
+      error: "Failed to process large knowledge base",
       details: error.message 
     });
   }

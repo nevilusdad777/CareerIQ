@@ -27,6 +27,11 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Job"
   }],
+  completedRoadmaps: [{
+    roadmapId: { type: mongoose.Schema.Types.ObjectId, ref: 'Roadmap' },
+    competencyName: String,
+    completedAt: { type: Date, default: Date.now }
+  }],
   createdAt: {
     type: Date,
     default: Date.now,

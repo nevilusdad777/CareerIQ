@@ -64,6 +64,7 @@ router.get("/users", async (req, res) => {
           phone: user.phone,
           department: user.department,
           createdAt: user.createdAt,
+          completedRoadmaps: user.completedRoadmaps || [],
           analytics: analytics || defaultAnalytics,
           roadmapStats: roadmapStats
         };

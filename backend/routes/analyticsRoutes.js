@@ -708,49 +708,6 @@ router.get('/user-stats', async (req, res) => {
 });
 
 
-// GET /api/analytics/learning-progress - Get user's learning progress
-router.get('/learning-progress', async (req, res) => {
-  try {
-    console.log("Learning progress request received");
-    const { userId } = req.query;
-    
-    if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: "userId is required"
-      });
-    }
-
-    const profile = await Profile.findOne({ userId });
-    
-    if (!profile || !profile.skills || profile.skills.length === 0) {
-      return res.json({
-        success: true,
-        data: []
-      });
-    }
-    
-    const progress = profile.skills.map(skill => ({
-      name: skill.name,
-      progress: skill.level || 0,
-      target: 100,
-      status: skill.level >= 70 ? "Mastered" : skill.level >= 50 ? "Intermediate" : "Beginner"
-    }));
-    
-    res.json({
-      success: true,
-      data: progress.slice(0, 4)
-    });
-
-  } catch (error) {
-    console.error("Learning progress API error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server error while fetching learning progress"
-    });
-  }
-});
-
 // GET /api/analytics/learning-activity - Get user's weekly learning activity
 router.get('/learning-activity', async (req, res) => {
   try {
