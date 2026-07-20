@@ -116,3 +116,6 @@ dist/
 *.db
 *.sqlite
 *.sqlite3
+
+# Documents folder (contains PPTs, DOCs, PDFs for Viva)
+Documents/
