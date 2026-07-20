@@ -4,6 +4,16 @@ const Question = require('../models/Question');
 const SkillAttempt = require('../models/SkillAttempt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const fs = require('fs');
+const path = require('path');
+
+// Logger for submission debugging
+const logFile = path.join(__dirname, '../submission_debug.log');
+const debugLog = (msg) => {
+  const line = `[${new Date().toISOString()}] ${msg}\n`;
+  fs.appendFileSync(logFile, line);
+  console.log(line);
+};
 
 const difficultyMultipliers = {
   beginner: 1,
@@ -143,7 +153,7 @@ router.post('/submit', authenticateToken, async (req, res) => {
       return res.status(400).json({ success: false, error: 'Answers array is required' });
     }
 
-    console.log(`📝 Processing submission: ${answers.length} answers`);
+    debugLog(`🚀 Processing submission for user: ${req.user.id} - ${answers.length} answers`);
 
     // Fetch all relevant questions from DB
     const questionIds = answers.map(a => a.questionId);
@@ -163,20 +173,29 @@ router.post('/submit', authenticateToken, async (req, res) => {
       const maxWeight = Math.max(...weights);
       const selectedOption = question.options[answer.selectedOptionIndex];
       const selectedWeight = selectedOption ? selectedOption.weight : 0;
-      const correctOptionIndex = weights.indexOf(maxWeight);
-      const isCorrect = selectedWeight === maxWeight;
+      
+      // Safety check for weights
+      const correctOptionIndex = weights.length > 0 ? weights.indexOf(maxWeight) : 0;
+      const isCorrect = selectedWeight === maxWeight && weights.length > 0;
 
       if (isCorrect) correctAnswers++;
       totalWeight += maxWeight;
       earnedWeight += selectedWeight;
 
       // Track categories
-      const cat = question.category || "General";
+      let cat = question.category || "General";
+      // Fix Mongoose Map dot key restriction
+      if (cat === "Node.js") cat = "NodeJS";
       if (!categoryStats[cat]) {
         categoryStats[cat] = { earned: 0, total: 0 };
       }
       categoryStats[cat].earned += selectedWeight;
       categoryStats[cat].total += maxWeight;
+
+      // Defensive access to correct option text
+      const correctOptionText = (question.options && question.options[correctOptionIndex]) 
+        ? question.options[correctOptionIndex].text 
+        : "N/A";
 
       return {
         questionId: question._id,
@@ -184,7 +203,7 @@ router.post('/submit', authenticateToken, async (req, res) => {
         selectedOptionIndex: answer.selectedOptionIndex,
         selectedOptionText: selectedOption ? selectedOption.text : "Not selected",
         correctOptionIndex: correctOptionIndex,
-        correctOptionText: question.options[correctOptionIndex].text,
+        correctOptionText: correctOptionText,
         allOptions: question.options.map(opt => ({ text: opt.text, weight: opt.weight })),
         correctWeight: maxWeight,
         selectedWeight: selectedWeight,
@@ -200,7 +219,8 @@ router.post('/submit', authenticateToken, async (req, res) => {
     const overallScore = totalWeight > 0 ? Math.round((earnedWeight / totalWeight) * 100) : 0;
     const categoryScores = {};
     Object.keys(categoryStats).forEach(cat => {
-      categoryScores[cat] = Math.round((categoryStats[cat].earned / categoryStats[cat].total) * 100);
+      const stats = categoryStats[cat];
+      categoryScores[cat] = stats.total > 0 ? Math.round((stats.earned / stats.total) * 100) : 0;
     });
     
     // Determine strengths and weaknesses
@@ -239,7 +259,8 @@ router.post('/submit', authenticateToken, async (req, res) => {
     let placementProb = Math.round(overallScore * 0.7); // Dynamic baseline from assessment
     
     try {
-      const userProfile = await Profile.findOne({ userId: req.user.id });
+      // Profile.userId is a String in schema, so use toString()
+      const userProfile = await Profile.findOne({ userId: req.user.id.toString() });
       if (userProfile) {
         profileStrengthLabel = calculateProfileStrength(userProfile);
         // If profile is good, boost probability
@@ -247,7 +268,7 @@ router.post('/submit', authenticateToken, async (req, res) => {
         else if (profileStrengthLabel === "Good") placementProb += 10;
       }
     } catch (profileError) {
-      console.log("Note: Could not fetch profile for strength calculation:", profileError.message);
+      debugLog(`Note: Profile fetch error: ${profileError.message}`);
     }
 
     placementProb = Math.min(placementProb, 98); // Cap at 98 until predictor run
@@ -284,7 +305,7 @@ router.post('/submit', authenticateToken, async (req, res) => {
           totalSkills: Object.keys(categoryScores).length,
           bestRoleMatch: resultData.predictedRole,
           confidenceLevel: overallScore,
-          placementProbability: placementProb,
+          placementProbability: Math.min(placementProb, 98),
           profileStrengthLabel: profileStrengthLabel,
           currentStreak: newStreak,
           lastActive: now,
@@ -305,15 +326,24 @@ router.post('/submit', authenticateToken, async (req, res) => {
     res.json({ success: true, data: resultData });
 
   } catch (error) {
-    console.error('❌ Error in submit route:', error);
-    console.error('❌ Error stack:', error.stack);
-    console.error('❌ Request body received:', req.body);
+    debugLog(`❌ ERROR in submit route: ${error.message}`);
+    debugLog(`❌ Stack: ${error.stack}`);
     
+    // Handle specifically duplicate key error for SkillAttempt
+    if (error.code === 11000) {
+      debugLog(`⚠️ Duplicate submission detected for user ${req.user.id}`);
+      return res.status(409).json({
+        success: false,
+        error: 'Duplicate submission',
+        message: 'You have already submitted an assessment recently.'
+      });
+    }
+
     res.status(500).json({ 
       success: false,
       error: 'Server error',
       message: 'Failed to submit answers',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details: error.message
     });
   }
 });

@@ -1,0 +1,459 @@
+/* AdminJob.css - Enhanced Career Entry Form Styling */
+
+/* Import shared admin variables */
+@import './AdminContent.css';
+
+/* Career Entry Modal Enhancements */
+.admin-modal {
+  background: linear-gradient(135deg, rgba(18, 18, 21, 0.99) 0%, rgba(30, 41, 59, 0.97) 100%) !important;
+  backdrop-filter: blur(32px) !important;
+  -webkit-backdrop-filter: blur(32px) !important;
+  width: 100% !important;
+  max-width: 1000px !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(59, 130, 246, 0.08),
+    0 48px 80px rgba(0, 0, 0, 0.5),
+    0 24px 48px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  overflow: hidden !important;
+  animation: modalSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  color: var(--admin-text) !important;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Enhanced Modal Header */
+.modal-header {
+  padding: 0.5rem 0.8rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.modal-header h2 {
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #cbd5e1 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  margin: 0 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.modal-header .admin-btn-icon {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--admin-text-muted);
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.6rem;
+  font-weight: 300;
+}
+
+.modal-header .admin-btn-icon:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  transform: scale(1.05);
+}
+
+/* Enhanced Modal Body */
+.modal-body {
+  padding: 0.6rem 0.8rem !important;
+  background: linear-gradient(135deg, rgba(9, 9, 11, 0.4) 0%, rgba(15, 23, 42, 0.3) 100%) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Improved Form Layout */
+.admin-form-group {
+  margin-bottom: 0.6rem !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.admin-form-group label {
+  width: 130px !important;
+  flex-shrink: 0 !important;
+  font-size: 0.5rem !important;
+  font-weight: 600 !important;
+  color: #60a5fa !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 0.4rem !important;
+  margin-bottom: 0 !important;
+  text-align: right !important;
+}
+
+.admin-form-group label::before {
+  content: '';
+  width: 3px;
+  height: 3px;
+  background: var(--admin-primary);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Enhanced Input Fields */
+.admin-form-group input,
+.admin-form-group select,
+.admin-form-group textarea {
+  width: 100%;
+  padding: 0.8rem 1rem !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  font-size: 0.7rem !important;
+  outline: none;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  color: var(--admin-text) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 
+    inset 0 2px 8px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  backdrop-filter: blur(12px) !important;
+  position: relative !important;
+}
+
+.admin-form-group input::placeholder,
+.admin-form-group textarea::placeholder {
+  color: #3b82f6 !important;
+  font-style: italic !important;
+  font-size: 0.6rem !important;
+  opacity: 0.5;
+}
+
+.admin-form-group input:focus,
+.admin-form-group select:focus,
+.admin-form-group textarea:focus {
+  border-color: var(--admin-primary) !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.8) 100%) !important;
+  box-shadow: 
+    0 0 0 4px rgba(59, 130, 246, 0.25),
+    inset 0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-2px) scale(1.01) !important;
+}
+
+/* Enhanced Select Dropdown */
+.admin-form-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a1a1aa'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.2rem;
+  padding-right: 3rem;
+}
+
+.admin-form-group select option {
+  background: #1e293b;
+  color: var(--admin-text);
+  padding: 0.5rem;
+}
+
+/* Enhanced Textarea */
+.admin-form-group textarea {
+  resize: vertical;
+  min-height: 45px !important;
+  line-height: 1.2 !important;
+}
+
+/* Grid Layout Improvements */
+.modal-body > div:first-child > div,
+.modal-body > div:nth-child(2) > div,
+.modal-body > div:nth-child(3) > div {
+  position: relative;
+}
+
+/* Input Field Icons */
+.admin-form-group input[type="url"] {
+  padding-left: 1.6rem;
+}
+
+.admin-form-group input[type="url"] + .url-icon {
+  position: absolute;
+  left: 8.8rem !important; /* Adjusted for label width */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #3b82f6;
+  font-size: 0.55rem;
+}
+
+/* Enhanced Modal Footer */
+.modal-footer {
+  padding: 0.5rem 0.8rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+  gap: 1rem !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Enhanced Buttons */
+.admin-btn-primary {
+  background: #18181b !important;
+  color: #fff !important;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 6px !important;
+  border: 1px solid #3f3f46 !important;
+  font-weight: 600 !important;
+  font-size: 0.6rem !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.3rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  position: relative !important;
+}
+
+.admin-btn-primary::before {
+  display: none;
+}
+
+.admin-btn-primary:hover::before {
+  display: none;
+}
+
+.admin-btn-primary:hover {
+  background: #27272a !important;
+  border-color: #52525b !important;
+}
+
+.admin-btn-primary:active {
+  background: #3f3f46 !important;
+}
+
+/* Back Button Enhancement - Fixed */
+.modal-footer button[type="button"] {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--admin-text-muted) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  font-size: 0.6rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.modal-footer button[type="button"]:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: var(--admin-text) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Form Validation States */
+.admin-form-group input:invalid,
+.admin-form-group input:required:invalid {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.admin-form-group input:valid,
+.admin-form-group input:required:valid {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* Loading State */
+.admin-btn-primary.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.admin-btn-primary.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  right: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-modal {
+    max-width: 95%;
+    margin: 1rem;
+    border-radius: 16px;
+  }
+  
+  .modal-header {
+    padding: 1.5rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .modal-footer {
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .modal-footer button {
+    width: 100%;
+  }
+  
+  .modal-body > div > div {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Enhanced Focus Management */
+.admin-form-group input:focus,
+.admin-form-group select:focus,
+.admin-form-group textarea:focus {
+  outline: none;
+}
+
+/* Smooth Scrollbar for Modal */
+.admin-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-modal::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.admin-modal::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.admin-modal::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Tooltip Enhancement */
+.admin-form-group input:hover::placeholder,
+.admin-form-group textarea:hover::placeholder {
+  color: #71717a;
+}
+
+/* Success Animation */
+@keyframes successPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.admin-form-group input.success:focus {
+  animation: successPulse 0.6s ease;
+}
+
+/* Admin Tabs Styling */
+.admin-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--admin-text-muted);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--admin-text);
+}
+
+.tab-btn.active {
+  background: var(--admin-primary);
+  color: #ffffff;
+  border-color: var(--admin-primary);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Application Specific Styles */
+.app-message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+  color: var(--admin-text-muted);
+  cursor: help;
+}
+
+.status-select {
+  padding: 0.4rem 0.75rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--admin-text);
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.status-select:focus {
+  border-color: var(--admin-primary);
+}
+
+/* Badge Status Colors */
+.admin-badge.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); }
+.admin-badge.reviewed { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+.admin-badge.shortlisted { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.admin-badge.rejected { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+.admin-badge.blue-light { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }

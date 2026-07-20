@@ -1,0 +1,487 @@
+/* ================================================================
+   CAREERIQ — PERFECT SIGNUP | Visible at 100% zoom
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hide unused elements */
+
+/* ================================================================
+   MAIN CONTAINER — Centered Signup & Unscrollable
+   ================================================================ */
+.signup-page {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(145deg, #000000 0%, #0a1929 30%, #1565c0 70%, #1e88e5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  padding: 20px;
+}
+
+.signup-page::before,
+.signup-page::after {
+  display: none !important;
+}
+
+/* ── Form Card ── */
+.signup-card {
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 12px 22px 10px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45),
+    0 6px 20px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  position: relative;
+  z-index: 10;
+  margin: auto;
+  overflow: hidden;
+}
+
+.signup-card::before,
+.signup-card::after {
+  display: none !important;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Logo Styling ── */
+.signup-logo {
+  text-align: center;
+  margin-bottom: -50px;
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.signup-logo .career {
+  color: #000000;
+  font-weight: 900;
+}
+
+.signup-logo .iq {
+  color: #1E88E5;
+  font-weight: 900;
+}
+
+/* ── Form Header ── */
+.signup-card h2 {
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0d1b3e;
+  margin-bottom: 2px;
+  letter-spacing: -0.3px;
+}
+
+.signup-card .career-text {
+  color: #000000;
+  font-weight: 900;
+}
+
+.signup-card .iq-text {
+  color: #1e88e5;
+  font-weight: 900;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 0.72rem;
+  color: #7a8aaa;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+/* ── Error ── */
+.error-message {
+  background: #fff5f5;
+  color: #c53030;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border-left: 3px solid #fc8181;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+/* ── Form ── */
+.signup-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #2d3a5a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input-group label i {
+  color: #1e88e5;
+  font-size: 0.68rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1.5px solid #e2e9f5;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: #f7faff !important;
+  color: #0d1b3e !important;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-group input::placeholder {
+  color: #b8c5da;
+}
+
+.input-group input:focus {
+  border-color: #1e88e5;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+}
+
+.input-group input.error {
+  border-color: #ef4444;
+}
+
+/* ── Password ── */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 42px;
+}
+
+.eye-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9fb0cc;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.eye-button:hover {
+  color: #1e88e5;
+}
+
+.eye-button i {
+  font-size: 0.88rem;
+}
+
+/* ── Field Errors ── */
+.field-error {
+  color: #ef4444;
+  font-size: 0.72rem;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.caps-lock-warning {
+  color: #f59e0b;
+  font-size: 0.72rem;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+/* ── Submit Button ── */
+.signup-btn {
+  width: 100%;
+  padding: 8px;
+  background: linear-gradient(135deg, #1565c0 0%, #1e88e5 55%, #42a5f5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 2px;
+  transition: all 0.22s ease;
+  box-shadow: 0 4px 16px rgba(30, 136, 229, 0.36);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.2px;
+}
+
+.signup-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.signup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 136, 229, 0.48);
+}
+
+.signup-btn:active {
+  transform: translateY(0);
+}
+
+.signup-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.signup-btn i {
+  font-size: 0.86rem;
+}
+
+/* ── Divider ── */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+  gap: 6px;
+  color: #b0bcd8;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e6ecf8;
+}
+
+.divider-text {
+  color: #b0bcd8;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* ── Social Buttons ── */
+.social-buttons {
+  display: none;
+}
+
+.social-btn {
+  padding: 8px 12px;
+  border: 1.5px solid #e2e9f5;
+  border-radius: 7px;
+  background: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #2d3a5a;
+  transition: all 0.2s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.social-btn.google:hover {
+  border-color: #4285f4;
+  color: #4285f4;
+}
+
+.social-btn.github:hover {
+  border-color: #222;
+  color: #222;
+}
+
+.social-btn i {
+  font-size: 0.92rem;
+}
+
+/* ── Footer Link ── */
+.signup-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #7a8aaa;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.footer-text {
+  color: #7a8aaa;
+}
+
+.login-link {
+  color: #1e88e5;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  color: #1565c0;
+  text-decoration: underline;
+}
+
+/* ── Shortcuts ── */
+.shortcuts {
+  text-align: center;
+  padding-top: 8px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.shortcut-text {
+  color: #94a3b8;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+kbd {
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  font-family: monospace;
+}
+
+/* ================================================================
+   RESPONSIVE — Mobile & Scrollable
+   ================================================================ */
+@media (max-width: 860px) {
+  .signup-page {
+    padding: 15px;
+    min-height: 100vh;
+    align-items: flex-start;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .signup-card {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 26px 20px 22px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-page {
+    padding: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .signup-card {
+    padding: 22px 18px 18px;
+    border-radius: 16px;
+  }
+
+  .signup-card h2 {
+    font-size: 1.35rem;
+  }
+
+  .social-buttons {
+    grid-template-columns: 1fr;
+  }
+}

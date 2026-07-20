@@ -2,6 +2,8 @@ const express = require("express");
 const User = require("../models/User");
 const UserAnalytics = require("../models/UserAnalytics");
 const RoadmapProgress = require("../models/RoadmapProgress");
+const Feedback = require("../models/Feedback");
+const SkillAttempt = require("../models/SkillAttempt");
 
 const router = express.Router();
 
@@ -125,7 +127,7 @@ router.post("/activities", (req, res) => {
 });
 
 // Get recent activities
-router.get("/activities", (req, res) => {
+router.get("/activities", async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 10;
     const type = req.query.type;
@@ -140,10 +142,10 @@ router.get("/activities", (req, res) => {
     // Return limited number of activities
     const limitedActivities = filteredActivities.slice(0, limit);
     
-    // Calculate some stats
-    const feedbackCount = activities.filter(a => a.type === 'feedback').length;
-    const skillTestCount = activities.filter(a => a.type === 'skill_test').length;
-    const courseCount = activities.filter(a => a.type === 'course_enrollment' || a.type === 'course_completion').length;
+    // Calculate stats from DB 
+    const feedbackCount = await Feedback.countDocuments({});
+    const skillTestCount = await SkillAttempt.countDocuments({ status: 'completed' });
+    const courseCount = await RoadmapProgress.countDocuments({});
 
     res.json({
       success: true,

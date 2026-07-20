@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-main);
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content-full {
+  flex: 1;
+  margin-left: 0;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.content-with-sidebar {
+  flex: 1;
+  padding: 20px;
+  transition: all 0.3s ease;
+}

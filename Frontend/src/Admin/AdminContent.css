@@ -1,0 +1,383 @@
+:root {
+  --admin-primary: #3b82f6;
+  /* Elite Azure */
+  --admin-primary-hover: #60a5fa;
+  --admin-danger: #ef4444;
+  --admin-bg: #09090b;
+  /* Zinc Black - Pure Elite */
+  --admin-card-bg: rgba(18, 18, 21, 0.8);
+  /* Deeper Glassmorphism */
+  --admin-text: #f8fafc;
+  /* High-contrast white */
+  --admin-text-muted: #60a5fa;
+  --admin-border: rgba(59, 130, 246, 0.15);
+  /* Surgical precision */
+
+  /* Silicon Valley Shadows - Higher contrast for deep surfaces */
+  --admin-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --admin-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 8px 16px rgba(0, 0, 0, 0.6);
+  --admin-shadow-lg:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 30px 60px -12px rgba(0, 0, 0, 0.8);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  background: var(--admin-bg) !important;
+  color: var(--admin-text);
+  overflow-x: hidden;
+}
+
+/* Premium Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--admin-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e40af;
+  border-radius: 10px;
+  border: 2px solid var(--admin-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+.dashboard-layout {
+  display: flex;
+  flex-direction: row;
+  /* Sidebar Persistence */
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  /* Space for Proper Sidebar */
+  transition: margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 100vh;
+  background: var(--admin-bg);
+}
+
+/* Dynamic margin adjustment when sidebar is collapsed */
+.proper-sidebar.collapsed+.main-content {
+  margin-left: 72px;
+}
+
+.admin-content-container {
+  padding: 2.5rem 3rem 2.5rem 1.5rem;
+  max-width: 1600px;
+  margin: 0;
+  width: 100%;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  animation: fadeInUpProper 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInUpProper {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmerProper {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  }
+}
+
+.admin-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.header-meta h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--admin-text);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.04em;
+}
+
+.header-meta p {
+  font-size: 0.85rem;
+  color: var(--admin-text-muted);
+  font-weight: 450;
+}
+
+/* Hyper-Premium Stats Bar */
+.admin-stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-item-mini {
+  background: var(--admin-card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--admin-border);
+  box-shadow: var(--admin-shadow);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  min-width: 220px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stat-item-mini:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  background: rgba(30, 41, 59, 0.9);
+}
+
+.stat-icon-mini {
+  width: 44px;
+  height: 44px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--admin-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.1);
+}
+
+.stat-info-mini h3 {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: var(--admin-text-muted);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+}
+
+.stat-info-mini p {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--admin-text);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Elite Table System */
+.admin-card {
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  box-shadow: var(--admin-shadow);
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+.admin-table th {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1rem 1.25rem;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--admin-text-muted);
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--admin-border);
+  vertical-align: middle;
+  color: var(--admin-text);
+  transition: all 0.1s ease;
+}
+
+.admin-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Precision Horizontal Forms (Small & Perfect) */
+.admin-form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.admin-form-group label {
+  width: 150px;
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: #52525b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.admin-form-group input,
+.admin-form-group select,
+.admin-form-group textarea {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--admin-border);
+  font-size: 0.85rem;
+  outline: none;
+  background: rgba(15, 23, 42, 0.5);
+  color: var(--admin-text);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.admin-form-group input:focus {
+  border-color: var(--admin-primary);
+  background: rgba(30, 41, 59, 0.8);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Hyper-Premium Modal */
+.admin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(9, 9, 11, 0.6);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+
+.admin-modal {
+  background: rgba(18, 18, 21, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  width: 100%;
+  max-width: 680px;
+  border-radius: 20px;
+  box-shadow: var(--admin-shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  animation: modalScaleUpProper 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--admin-text);
+}
+
+@keyframes modalScaleUpProper {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+}
+
+.modal-header h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.modal-body {
+  padding: 2rem 2.5rem;
+}
+
+.modal-footer {
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--admin-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Premium Buttons */
+.admin-btn-primary {
+  background: #18181b;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #27272a;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-btn-primary:hover {
+  background: #27272a;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
