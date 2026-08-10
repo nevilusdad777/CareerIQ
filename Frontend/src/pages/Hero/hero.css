@@ -426,7 +426,7 @@ html, body {
 }
 
 /* ==================== RESPONSIVE ==================== */
-@media (max-width: 960px) {
+@media (max-width: 1200px) {
   .navbar {
     top: 12px !important;
     left: 16px !important;
