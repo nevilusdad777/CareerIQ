@@ -19,6 +19,9 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// Enable pre-flight for all routes
+app.options('*', cors());
+
 // Handle preflight - removed problematic line
 
 app.use(express.json());
