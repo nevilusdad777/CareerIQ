@@ -40,7 +40,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // Import routes directly
-const loadRoutes = async () => {
+const loadRoutes = () => {
   try {
     console.log("Loading API routes...");
     const adminRoutes = require("./routes/adminRoutes");
@@ -86,34 +86,28 @@ const loadRoutes = async () => {
   }
 };
 
-// Start Server
-const PORT = process.env.PORT || 5000;
+// Initialize DB connection and load routes
+connectDB().catch(err => {
+  console.error("Database connection failed on startup:", err);
+});
+loadRoutes();
 
-const startServer = async () => {
-  try {
-    // Wait for DB connection
-    await connectDB();
-    
-    // Load routes after successful DB connection
-    await loadRoutes();
-    
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`
+// Export the app for Vercel Serverless Functions
+module.exports = app;
+
+// Start Server locally if not running on Vercel
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`
 =====================================
- CAREERIQ BACKEND RUNNING SUCCESSFULLY!
+ CAREERIQ BACKEND RUNNING LOCALLY!
 =====================================
  Server: http://localhost:${PORT}
  Health: http://localhost:${PORT}/api/health
- Frontend: http://localhost:5173
  Database: MongoDB Atlas
 =====================================
  Ready to accept connections
 `);
-    });
-  } catch (error) {
-    console.error("Failed to start server:", error);
-    process.exit(1);
-  }
-};
-
-startServer();
+  });
+}
