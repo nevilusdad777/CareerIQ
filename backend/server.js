@@ -17,10 +17,8 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
 // Enable pre-flight for all routes
-app.options('*', cors());
+// app.use(cors()) handles OPTIONS requests automatically
 
 // Handle preflight - removed problematic line
 
