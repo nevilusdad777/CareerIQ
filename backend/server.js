@@ -30,13 +30,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health Check Endpoint
+// Health Check Endpoint — always returns 200 so keep-alive cron jobs never fail
 app.get("/api/health", (req, res) => {
-  res.json({
+  const mongoose = require("mongoose");
+  const dbStates = ["disconnected", "connected", "connecting", "disconnecting"];
+  const dbState = mongoose.connection.readyState;
+  res.status(200).json({
     status: "ok",
     timestamp: new Date().toISOString(),
     server: "CareerIQ Backend",
-    version: "1.0.0"
+    version: "1.0.0",
+    db: dbStates[dbState] ?? "unknown"
   });
 });
 

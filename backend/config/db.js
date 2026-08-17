@@ -74,10 +74,12 @@ const connectDB = async () => {
       console.error("2. Click: Network Access → IP Whitelist");
       console.error("3. Click: Add IP Address → Add Current IP");
       console.error("4. Save and wait 2-3 minutes");
-      console.error("5. Restart: npm start");
     }
     
-    process.exit(1);
+    // In serverless environments, never call process.exit() — it crashes the
+    // entire function instance and causes ALL routes (including /api/health)
+    // to return 500. Throw instead so the caller can handle it gracefully.
+    throw error;
   }
 };
 
