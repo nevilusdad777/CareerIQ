@@ -25,24 +25,29 @@ app.use(cors({
 app.use(express.json());
 
 app.use((req, res, next) => {
-  console.log(`🌐 [${new Date().toLocaleTimeString()}] ${req.method} ${req.url}`);
-  if (req.method === 'POST') console.log('📦 Body:', JSON.stringify(req.body).substring(0, 100));
+  console.log(`ðŸŒ [${new Date().toLocaleTimeString()}] ${req.method} ${req.url}`);
+  if (req.method === 'POST') console.log('ðŸ“¦ Body:', JSON.stringify(req.body).substring(0, 100));
   next();
 });
 
-// Health Check Endpoint — always returns 200 so keep-alive cron jobs never fail
-app.get("/api/health", (req, res) => {
+// Health Check Endpoint â€” always returns 200 so keep-alive cron jobs never fail
+const healthCheckHandler = (req, res) => {
   const mongoose = require("mongoose");
   const dbStates = ["disconnected", "connected", "connecting", "disconnecting"];
   const dbState = mongoose.connection.readyState;
   res.status(200).json({
     status: "ok",
+    message: "CareerIQ API is running",
     timestamp: new Date().toISOString(),
     server: "CareerIQ Backend",
     version: "1.0.0",
     db: dbStates[dbState] ?? "unknown"
   });
-});
+};
+
+app.get("/", healthCheckHandler);
+app.get("/health", healthCheckHandler);
+app.get("/api/health", healthCheckHandler);
 
 // Import routes directly
 const loadRoutes = () => {
